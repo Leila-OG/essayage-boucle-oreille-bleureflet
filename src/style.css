@@ -1,0 +1,789 @@
+  /* ================================================
+   style.css : regroupe tous les styles de Test.vue
+   ================================================ */
+
+  /* Définition des variables pour les couleurs */
+  :root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    --primary-blue: #0f385aab;
+    --hover-blue: #0d628cb1;
+    --glow-blue: rgba(0, 140, 255, 0.405);
+    --bg-dark: #0b0f19;
+  }
+
+  /* Effet luminescent pour les boutons */
+  .glow-button {
+    position: relative;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 1.0rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    background: linear-gradient(145deg, var(--primary-blue), var(--hover-blue));
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 10px var(--glow-blue);
+  }
+
+  /* Ajout d'un effet lumineux au survol */
+  .glow-button:hover {
+    box-shadow: 0 0 20px var(--hover-blue), 0 0 40px var(--glow-blue);
+    background: linear-gradient(145deg, var(--hover-blue), white);
+    color: #0b0f19;
+  }
+
+  /* Boutons plus subtils (ex: mode toggle) */
+  .toggle-button {
+    background: var(--primary-blue);
+    border-radius: 30px;
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    box-shadow: 0 0 10px var(--glow-blue);
+  }
+
+  .toggle-button:hover {
+    background: var(--hover-blue);
+    box-shadow: 0 0 20px var(--hover-blue);
+  }  
+  
+  button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: var(--bg-color);
+    cursor: pointer;
+    transition: border-color 0.25s;
+  }
+  button:hover {
+    border-color: #646cff;
+  }
+  button:focus,
+  button:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+  }
+  
+  .card {
+    padding: 2em;
+  }
+  
+  #app {
+    /* max-width: 1280px;  */
+    margin: 0 auto;
+    /* padding: 2rem; */
+    text-align: center;
+  }
+  
+  @media (prefers-color-scheme: light) {
+    :root {
+      color: #213547;
+      background-color: #ffffff;
+    }
+    a:hover {
+      color: #747bff;
+    }
+    button {
+      background-color: #f9f9f9;
+    }
+  }
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    place-items: center;
+    min-height: 100vh;
+    background: #0b0f19;
+    overflow: hidden;
+  }
+  
+  .page-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-color);
+    position: relative;
+  }
+  
+  /* A few tweaks to make the category overlay buttons look nicer */
+  .category-button {
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin: 10px 0;
+    padding: 12px 20px;
+    font-size: 1.0rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    /* z-index: 3; */
+  }
+  .category-button:hover {
+    background-color: var(--hover-color);
+  }
+  
+  /* Bouton toggle */
+  .toggle-container {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    width: 100px;
+    height: 40px;
+    background: #30445ab3;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 1000;
+  }
+  .toggle-ball {
+    width: 20px;
+    height: 20px;
+    background: #0d628c7a;
+    border-radius: 50%;
+    transition: transform 0.3s;
+  }
+  .toggle-ball.toggle-on {
+    transform: translateX(70px);
+  }
+  .toggle-label {
+    color: #fff;
+    margin-left: 10px;
+    font-size: 0.9em;
+    font-family: sans-serif;
+  }
+  
+  .display-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Conteneur du canvas */
+  .image-container {
+    position: relative;
+    display: inline-block;
+    margin: 0 auto;
+  }
+
+  /* .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  } */
+
+
+  .image-canvas {
+    display: block;
+    max-width: 100vw;
+    max-height: 100vh;
+    object-fit: contain;
+    overflow: auto;
+  }
+
+  /* .image-canvas {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    overflow: auto;
+  } */
+  
+  /* 
+     Mettre la vue uploadée en absolute 
+     par-dessus le canvas
+  */
+  .uploaded-image-view {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* On prend toute la taille pour être sûr de tout couvrir */
+    width: 100%;
+    height: 100%;
+    z-index: 10; /* pour être au-dessus du canvas */
+  }
+  
+  /* Flèche, menu, etc. seront dans ce bloc, par-dessus */
+  .back-button {
+    position: absolute;
+    top: 30px;
+    left: 10px;
+    background: var(--primary-blue);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.0em;
+    transition: background 0.3s;
+    box-shadow: 0 0 10px var(--glow-blue);
+    /* On peut encore augmenter pour passer au-dessus de tout */
+    z-index: 9999; 
+    box-sizing: border-box;
+    padding: 0;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+  .back-button:hover {
+    background: var(--hover-blue);
+    transform: scale(1.1);
+  }
+  
+  /* Navigation mannequin (si !isUploaded) */
+  .default-image-view {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    font-size: 1.0em;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.2s ease;
+  }
+  .arrow:hover {
+    background: none;
+    box-shadow: 0 0 10px gray, 0 0 20px gray;
+    /* transform: scale(1.1); */
+  }
+  .arrow-left {
+    left: 5px;
+    /* padding-top: 20px; */
+  }
+  .arrow-right {
+    right: 5px;
+  }
+  
+  /* Bouton upload */
+  .upload-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: var(--primary-blue);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.0em;
+    /* transition: background 0.3s; */
+    box-sizing: border-box;
+    box-shadow: 0 0 10px var(--glow-blue);
+    transition: all 0.3s ease;
+    padding: 0;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    z-index: 20;
+  }
+  .upload-button:hover {
+    /* background: #243689; */
+    box-shadow: 0 0 10px var(--hover-blue), 0 0 20px var(--glow-blue);
+    background: var(--hover-blue);
+    transform: scale(1.1);
+  }
+  
+  /* Mode Live */
+  video.responsive-media {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 1;
+  }
+  .live-container {
+    width: 780px;
+    height: 600px;
+    position: relative;
+  }
+  .capture-button {
+    position: absolute;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    background: #ccc;
+    border-radius: 50%;
+    border: 5px solid #999;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: background 0.2s, border 0.2s;
+    z-index: 3;
+  }
+  .capture-button:hover {
+    background: #eee;
+    border-color: #fff;
+  }
+  
+  /* Modal overlay */
+  .modal-overlay {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: #0b0f19;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index: 2000;
+  }
+  .modal-content {
+    background: #7d89a626;
+    padding:20px;
+    border-radius:10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center; 
+    position: relative;
+  }
+  .preview-image {
+    max-width: 80vw;
+    max-height: 80vh;
+    margin-bottom:20px;
+    border:2px solid #fff;
+  }
+  .modal-buttons {
+    display:flex;
+    gap:10px;
+  }
+  .modal-btn {
+    background: var(--hover-blue);
+    box-shadow: 0 0 20px var(--hover-blue);
+    color:#fff;
+    border:none;
+    border-radius:50%;
+    cursor:pointer;
+    width:40px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.0em;
+    transition:background 0.3s;
+    text-decoration:none;
+  }
+  .modal-btn:hover {
+    background: var(--hover-blue);
+  }
+  .close-icon {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    cursor:pointer;
+    color:#fff;
+    font-size:1.1em;
+  }
+  .close-icon:hover {
+    color: var(--hover-blue);
+  }
+  
+  /* Canvas overlay */
+  .overlay-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: rgba(255, 0, 0, 0.1); /* Ajoute un léger fond rouge pour voir s’il est bien positionné */
+    z-index: 2; /* S'assurer qu'il soit au-dessus de la vidéo */
+  }
+  
+
+  /* Menu circulaire */
+  .menu-container {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+  }
+  .main-button {
+    width: 40px;
+    height: 40px;
+    background: #0f385aad;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.0em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+  }
+  .main-button:hover {
+    transform: scale(1.1);
+    background: var(--hover-blue);
+    box-shadow: 0 0 20px var(--hover-blue);
+  }
+  .circular-menu {
+    position: absolute;
+    /* Au-dessus du bouton principal */
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-63%);
+    /* Taille réduite en hauteur pour faire une sorte d'arc */
+    width: 150px;
+    height: 30px;
+    border-radius: 100px; /* demi-cercle */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  /* Quand le menu est "open" */
+  .circular-menu.open {
+    pointer-events: auto;
+    opacity: 1;
+  }
+  
+  /* Style générique des boutons du menu */
+  .menu-item {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: var(--primary-blue);
+    box-shadow: 0 0 10px var(--glow-blue);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.0em;
+    cursor: pointer;
+    transform: scale(0);
+    transition: transform 0.3s ease;
+  }
+  
+  .circular-menu.open .menu-item {
+    transform: scale(1);
+  }
+  
+  /* Example arc arrangement with more items*/
+  .menu-item:nth-child(1) {
+    top: 10%; left: 50%;
+    transform:translate(-50%,-50%) scale(0);
+  }
+  .menu-item:nth-child(2) {
+    top:80%; left:10%;
+    transform:translate(-50%,-50%) scale(0);
+  }
+  .menu-item:nth-child(3) {
+    top:80%; left:90%;
+    transform:translate(-50%,-50%) scale(0);
+  }
+  .menu-item:nth-child(4) {
+    top:70%; left:50%;
+    transform:translate(-50%,-50%) scale(0);
+  }
+  
+  /* Au survol */
+  .menu-item:hover {
+    /* background: #243689; */
+    background: var(--hover-blue);
+    box-shadow: 0 0 20px var(--hover-blue);
+  }
+  
+  /* Bouton "Choisir boucles" (au centre, bottom) */
+  .choose-earrings-button {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-blue);
+    box-shadow: 0 0 10px var(--glow-blue);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9em;
+    transition: background 0.3s;
+    box-sizing: border-box;
+    padding: 0;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    z-index: 4;
+  }
+  .choose-earrings-button:hover {
+    background: var(--hover-blue);
+    box-shadow: 0 0 10px var(--hover-blue), 0 0 20px var(--glow-blue);
+    /* transform: scale(1.1); */
+  }
+  
+  /* Désélection boucles */
+  .deselect-earrings-container {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+  }
+  .deselect-earrings-button {
+    background: var(--primary-blue);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    font-size: 0.6em;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 0 20px var(--glow-blue);
+  }
+  .deselect-earrings-button:hover {
+    background: var(--hover-blue);
+    transform: scale(1.1);
+  }
+  
+  /* Overlay Swiper */
+  .swiper-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+  .swiper-content {
+    background: rgba(1, 43, 92, 0.495);
+    border-radius: 8px;
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 400px;
+    color: #fff;
+    position: relative;
+  }
+  .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 50px;
+    background: var(--primary-blue);
+    border: none;
+    color: #fff;
+    padding: 5px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .my-swiper {
+    margin-top: 50px; /* Un peu de marge en haut */
+  }
+  .slide-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px; 
+  }
+  .slide-inner img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+  }
+  .selected-indicator {
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    background: rgba(1, 43, 92, 0.322);
+    color: #fff;
+    text-align: center;
+    font-size: 0.6em;
+    padding: 2px 20px;
+  }
+  
+  /* Category selection overlay */
+  .category-selection-overlay {
+    position:fixed; top:0; left:0; width:100vw; height:100vh;
+    background: rgba(0,0,0,0.8);
+    display:flex; align-items:center; justify-content:center;
+    z-index:9999;
+    backdrop-filter: blur(5px);
+  }
+  .category-content {
+    background: #333;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+  }
+  .category-content h2 {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    color: white;
+  }
+  .category-content button {
+    background: var(--primary-blue);   /* #555*/
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background 0.3s;
+    box-shadow: 0 0 10px var(--glow-blue);
+
+  }
+  .category-content button:hover {
+    background: var(--hover-blue);
+    transform : scale(1.0);
+  }
+  .category-content .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background:var(--primary-blue); border:none; color:#fff;
+    box-shadow: 0 0 10px var(--glow-blue);
+    padding:5px 8px; cursor:pointer;
+    border-radius:4px;
+    font-size: 0.9rem;
+  }
+  
+  .slider-container-vertical {
+    position: absolute;
+    top: 50%;
+    right: 25%;
+    transform: translateY(-50%);
+    z-index: 1000;
+  }
+  
+   .live-container video {
+  transform: scaleX(-1); 
+  } 
+
+  .earring-overlay {
+    position: absolute;
+    pointer-events: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 99999;
+  }
+
+  button,
+  .upload-button,
+  .toggle-button,
+  .menu-item,
+  .category-button {
+      outline: none !important;
+  }
+
+  button:focus,
+  button:active,
+  .upload-button:focus,
+  .upload-button:active,
+  .toggle-button:focus,
+  .toggle-button:active,
+  .menu-item:focus,
+  .menu-item:active,
+  .category-button:focus,
+  .category-button:active {
+      outline: none !important;
+  }
+
+  .zoom-slider-container {
+    position: absolute;
+    top: 70%;
+    right: -20px;
+    transform: translateY(-50%) rotate(180deg);
+    height: 150px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  #zoom-slider {
+    width: 5px;
+    height: 150px; 
+    -webkit-appearance: none;
+    writing-mode: vertical-lr; /* Orienter le slider verticalement */
+    appearance: none;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    outline: none;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+
+  }
+
+  #zoom-slider:hover {
+    opacity: 1;
+  }
+
+  /* Custom slider thumb */
+  #zoom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  #zoom-slider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+  }
