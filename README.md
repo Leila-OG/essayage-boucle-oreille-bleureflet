@@ -69,7 +69,6 @@ Deux modes sont disponibles :
 ### Backend (Python 3.9+)
 ```bash
 git clone https://...
-cd backend/
 conda create -n earring_env python=3.9
 pip install -r requirements.txt
 python api/api.py
@@ -77,11 +76,10 @@ python api/api.py
 
 ### Frontend 
 ```
-cd frontend/
 npm install
-npm run dev
+npm run dev (ou `npm run build` + `npm run preview` en production)
+npm run dev -- --host 0.0.0.0 depuis le serveur
 ```
-Pour production : ``npm run build && npm run preview``
 
 ## Roadmap / Evolutions 
 - Dockerisation pour QA & déploiement
