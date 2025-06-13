@@ -8,7 +8,8 @@ Deux modes sont disponibles :
 - **Mode "Model"** : upload ou sélection d’image
 - **Mode "Live"** : capture via webcam
 
-N.B. Le projet a été réalisé en équipe (de 5 personnes). Pour ma part, j'ai participé au développement du Backend (Entraînement du modèle YOLO pour la reconnaissance des oreilles) et du Frontend (optimisation de l'interface utilisateur).
+**N.B.** Le projet a été réalisé en équipe (de 5 personnes). Pour ma part, j'ai participé au développement du Backend (**Entraînement du modèle YOLO pour la reconnaissance des oreilles**) et du Frontend (**optimisation de l'interface utilisateur**).
+
 ---
 
 ## Structure du projet
