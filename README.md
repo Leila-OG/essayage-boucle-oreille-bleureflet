@@ -1,6 +1,6 @@
 # Essayage Virtuel de Boucles d’Oreilles – Computer Vision & Réalité Augmentée
 
-## Objectif du projet (proposé par l'entreprise Bleu Reflet)
+## Objectif du projet (Projet de fin d'étude proposé par l'entreprise Bleu Reflet)
 
 Ce projet vise à créer une application web interactive permettant l’**essayage virtuel de boucles d’oreilles** à partir d’une photo ou d’un flux vidéo en direct. L’objectif est d’offrir une **expérience client immersive** dans le secteur de la joaillerie, en combinant **vision par ordinateur**, **deep learning**, **web interactif** et **rendu temps réel**.
 
@@ -8,6 +8,7 @@ Deux modes sont disponibles :
 - **Mode "Model"** : upload ou sélection d’image
 - **Mode "Live"** : capture via webcam
 
+N.B. Le projet a été réalisé en équipe (de 5 personnes). Pour ma part, j'ai participé au développement du Backend (Entraînement du modèle YOLO pour la reconnaissance des oreilles) et du Frontend (optimisation de l'interface utilisateur).
 ---
 
 ## Structure du projet
